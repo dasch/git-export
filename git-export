@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Copyright (c) 2008 Daniel Schierbeck
+#
+# Export the contents of the git index to a specified directory
+
+USAGE="[-f | --force] [-d | --destination=<string>]"
+LONG_USAGE="Export the contents of the git index to a specified directory"
+SUBDIRECTORY_OK=Yes
+. git-sh-setup
+
+if [ -f .git ]; then
+  echo 1>&2 "fatal: not a git repository"
+  exit 127
+fi
+
+if [ $# -ne 1 ]; then
+  echo 1>&2 "Usage: $0 destination"
+  exit 127
+fi
