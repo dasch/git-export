@@ -4,17 +4,49 @@
 #
 # Export the contents of the git index to a specified directory
 
-USAGE="[-f | --force] [-d | --destination=<string>]"
-LONG_USAGE="Export the contents of the git index to a specified directory"
+USAGE="[-f | --force] <destination>"
+LONG_USAGE="Export the contents of the git index to the specified directory"
 SUBDIRECTORY_OK=Yes
+OPTIONS_SPEC=
 . git-sh-setup
 
-if [ -f .git ]; then
-  echo 1>&2 "fatal: not a git repository"
-  exit 127
+force=0
+destination=
+
+while :
+do
+  case $1 in
+    -f|--force)
+      force=1
+      ;;
+    -h|--h|--he|--hel|--help)
+      usage
+      ;;
+    *)
+      break
+      ;;
+    esac
+    shift
+done
+
+if [ $# -ne 1 ]
+then 
+  die "You can only export to a single destination"
+  exit 1
 fi
 
-if [ $# -ne 1 ]; then
-  echo 1>&2 "Usage: $0 destination"
-  exit 127
+if [ -e $1 -a $force -ne 1 ]
+then
+  die "$1 already exists. Use --force to overwrite any existing files."
+  exit 1
 fi
+
+destination=$1
+
+cd_to_toplevel
+
+echo "Exporting git repository to ${destination}"
+
+git-checkout-index -a --prefix=${destination}/
+
+exit 0
