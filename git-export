@@ -48,5 +48,3 @@ cd_to_toplevel
 echo "Exporting git repository to ${destination}"
 
 git-checkout-index -a --prefix=${destination}/
-
-exit 0
