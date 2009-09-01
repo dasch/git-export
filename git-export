@@ -13,20 +13,28 @@ OPTIONS_SPEC=
 force=0
 destination=
 
-while :
-do
-  case $1 in
+args=`getopt -o fh -l force,help,he,hel -- "$@"`
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+
+eval set -- "$args"
+
+while true ; do
+  case "$1" in
     -f|--force)
       force=1
+      shift
       ;;
     -h|--h|--he|--hel|--help)
       usage
+      shift
       ;;
+    --)
+      shift; break ;;
     *)
-      break
+      echo "Invalid argument found!" >&2
+      exit 2;
       ;;
-    esac
-    shift
+  esac
 done
 
 if [ $# -ne 1 ]
