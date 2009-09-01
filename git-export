@@ -31,7 +31,7 @@ while true ; do
     --)
       shift; break ;;
     *)
-      echo "Invalid argument found!" >&2
+      die "Invalid argument found!"
       exit 2;
       ;;
   esac
@@ -55,4 +55,4 @@ cd_to_toplevel
 
 echo "Exporting git repository to ${destination}"
 
-git-checkout-index -a --prefix=${destination}/
+git checkout-index -a --prefix=${destination}/
