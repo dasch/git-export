@@ -8,7 +8,7 @@ USAGE="[-f | --force] <destination>"
 LONG_USAGE="Export the contents of the git index to the specified directory"
 SUBDIRECTORY_OK=Yes
 OPTIONS_SPEC=
-. git-sh-setup
+. "`git --exec-path`/git-sh-setup"
 
 force=0
 destination=
